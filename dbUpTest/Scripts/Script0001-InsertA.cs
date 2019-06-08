@@ -10,7 +10,7 @@ namespace dbUpTest.Scripts
         {
             using (var cmd = dbCommandFactory())
             {
-                cmd.CommandText = "CREATE TABLE dbup_test( Name TEXT NOT NULL )";
+                cmd.CommandText = $"INSERT INTO Test (Content) Values ('Insert From {GetType().FullName}')";
                 cmd.ExecuteNonQuery();
             }
 

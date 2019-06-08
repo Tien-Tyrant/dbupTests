@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using DbUp;
 
 namespace dbUpTest
@@ -12,7 +8,7 @@ namespace dbUpTest
     {
         static void Main(string[] args)
         {
-            var connectionString = @"Data Source='C:\Users\zhao tian\Desktop\dbUpTest\SQLiteDB\DbUpTesting.db';";
+            var connectionString = @"Data Source='C:\Projects\dbuptest\SQLiteDb\test_db.db'";
 
             var upgrader =
                 DeployChanges.To
