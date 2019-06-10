@@ -8,12 +8,13 @@ namespace dbUpTest
     {
         static void Main(string[] args)
         {
-            var connectionString = @"Data Source='C:\Projects\dbuptest\SQLiteDb\test_db.db'";
+            var connectionString = @"Data Source='E:\projects\dbuptest\SQLiteDb\test_db.db'";
 
             var upgrader =
                 DeployChanges.To
                     .SQLiteDatabase(connectionString)
                     .WithScriptsAndCodeEmbeddedInAssembly(Assembly.GetExecutingAssembly())
+                    .WithTransactionPerScript()
                     .LogToConsole()
                     .Build();
 

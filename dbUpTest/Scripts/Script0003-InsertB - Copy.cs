@@ -4,7 +4,7 @@ using DbUp.Engine;
 
 namespace dbUpTest.Scripts
 {
-    class Script0002_InsertB : IScript
+    class Script0003_InsertC : IScript
     {
         public string ProvideScript(Func<IDbCommand> dbCommandFactory)
         {

@@ -8,11 +8,9 @@ namespace dbUpTest.Scripts
     {
         public string ProvideScript(Func<IDbCommand> dbCommandFactory)
         {
-            using (var cmd = dbCommandFactory())
-            {
+            var cmd = dbCommandFactory();
                 cmd.CommandText = $"INSERT INTO Test (Content) Values ('Insert From {GetType().FullName}')";
                 cmd.ExecuteNonQuery();
-            }
 
             return "";
         }
