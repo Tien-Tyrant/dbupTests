@@ -8,29 +8,43 @@ namespace SQLiteConnectionTest
     {
         static void Main(string[] args)
         {
-            var connectionString = @"Data Source='E:\projects\dbuptest\SQLiteDb\test_db.db'";
+            var connectionString = @"Data Source='C:\projects\dbuptest\SQLiteDb\test_db.db'";
 
-            using (var conn = new SQLiteConnection(connectionString))
-            {
+            var conn = new SQLiteConnection(connectionString);
                 conn.Open();
-                var result = Execute(Insert, conn);
+
+            using (var tran = conn.BeginTransaction())
+            {
+                var result = Insert(() =>
+                {
+                    var command = conn.CreateCommand();
+                    command.Transaction = tran;
+                    return command;
+                });
+                tran.Commit();
+            }
+
+            conn.Dispose();
+
+            using (var tran = conn.BeginTransaction())
+            {
+                var result = Insert(() =>
+                {
+                    var command = conn.CreateCommand();
+                    command.Transaction = tran;
+                    return command;
+                });
+                tran.Commit();
             }
         }
 
         private static string Execute(Func<Func<IDbCommand>, string> actionWithResult, IDbConnection dbConnection)
         {
 
-            using (var tran = dbConnection.BeginTransaction())
-            {
-                var result = actionWithResult(() =>
-                {
-                    var command = dbConnection.CreateCommand();
-                    command.Transaction = tran;
-                    return command;
-                });
-                tran.Commit();
-                return result;
-            }
+           
+
+
+            return string.Empty;
         }
 
         private static string Insert(Func<IDbCommand> cmdFactory)

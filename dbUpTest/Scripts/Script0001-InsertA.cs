@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using Dapper;
 using DbUp.Engine;
 
 namespace dbUpTest.Scripts
@@ -9,10 +10,15 @@ namespace dbUpTest.Scripts
         public string ProvideScript(Func<IDbCommand> dbCommandFactory)
         {
             var cmd = dbCommandFactory();
-                cmd.CommandText = $"INSERT INTO Test (Content) Values ('Insert From {GetType().FullName}')";
-                cmd.ExecuteNonQuery();
+            var values = cmd.Connection.Query<Result>("Select * From Test");
 
             return "";
+        }
+
+        class Result
+        {
+            public int Id { get; set; }
+            public string content { get; set; }
         }
     }
 }

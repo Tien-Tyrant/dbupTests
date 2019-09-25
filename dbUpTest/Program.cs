@@ -8,16 +8,23 @@ namespace dbUpTest
     {
         static void Main(string[] args)
         {
-            var connectionString = @"Data Source='E:\projects\dbuptest\SQLiteDb\test_db.db'";
+            var connectionString = @"Server=LAPTOP-1MAFGC2H\INEDO;Database=Test_dbup;MultipleActiveResultSets=true;Connection Timeout=120";
 
-            var upgrader =
+            var builder =
                 DeployChanges.To
-                    .SQLiteDatabase(connectionString)
-                    .WithScriptsAndCodeEmbeddedInAssembly(Assembly.GetExecutingAssembly())
-                    .WithTransactionPerScript()
-                    .LogToConsole()
-                    .Build();
+                    .SqlDatabase(connectionString);
 
+            var upgrader = builder
+                .WithScriptsAndCodeEmbeddedInAssembly(Assembly.GetExecutingAssembly())
+                .WithTransactionPerScript()
+                .LogToConsole()
+                .Build();
+
+            //var scripts = upgrader.GetScriptsToExecute().ToArray();
+            //foreach (var s in scripts)
+            //{
+            //    Console.WriteLine(s.Contents);
+            //}
             var result = upgrader.PerformUpgrade();
 
             if (!result.Successful)
